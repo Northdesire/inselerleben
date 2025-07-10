@@ -106,6 +106,19 @@ export default async function HotelGuidePage() {
           <Card icon={<MapPin className="text-purple-600 w-8 h-8" />} title="Geheimtipp">
             Spaziergang zur Düne 7 bei Sonnenuntergang – unvergesslich!
           </Card>
+          
+          <Card icon={<Info className="text-green-600 w-8 h-8" />} title="Gästemappe">
+  <p>Alle Infos zu Ihrem Aufenthalt bequem als PDF:</p>
+  <a
+    href="/gaestemappe.pdf"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block mt-2 text-blue-600 underline"
+  >
+    Gästemappe jetzt öffnen →
+  </a>
+</Card>
+
 
           <Card icon={<Info className="text-blue-600 w-8 h-8" />} title="Infos zum Hotel" className="sm:col-span-2">
             Frühstück: 7:30–10:30 Uhr · WLAN: Nordstrand2025 · Spa: täglich 14–20 Uhr
