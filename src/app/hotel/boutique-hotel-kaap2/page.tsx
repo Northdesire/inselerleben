@@ -79,27 +79,28 @@ export default async function HotelGuidePage() {
           <EventsCard events={events} />
 
           <Card icon={<Utensils className="text-red-500 w-8 h-8" />} title="Essen & Trinken">
-            <ul className="list-disc ml-6 space-y-2">
-              {[
-                "Knurrhahn Fischschnellrestaurant",
-                "Restaurant Die Kleine Möwe",
-                "Restaurant Black Pearl",
-                "Restaurant Zum Störtebeker",
-                "Restaurant Klein & Fein",
-              ].map((place) => (
-                <li key={place}>
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place + " Borkum")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline text-cyan-800"
-                  >
-                    {place}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </Card>
+  <ul className="list-disc ml-6 space-y-2">
+    {[
+      "Knurrhahn Fischschnellrestaurant",
+      "Restaurant Die Kleine Möwe",
+      "Restaurant Black Pearl",
+      "Restaurant Zum Störtebeker",
+      "Restaurant Klein & Fein",
+    ].map((place) => (
+      <li key={place}>
+        <a
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place + " Borkum")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline text-cyan-800"
+        >
+          {place}
+        </a>
+      </li>
+    ))}
+  </ul>
+</Card>
+
 
           <Card icon={<MapPin className="text-purple-600 w-8 h-8" />} title="Geheimtipp">
             Spaziergang zur Düne 7 bei Sonnenuntergang – unvergesslich!
