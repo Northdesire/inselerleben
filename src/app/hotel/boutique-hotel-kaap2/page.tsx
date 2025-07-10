@@ -158,7 +158,7 @@ function Card({
     <div className={`bg-white rounded-2xl shadow-sm border border-sky-100 p-5 flex items-start gap-4 ${className}`}>
       {icon}
       <div>
-        <h2 className="font-semibold text-cyan-900 text-lg">{title}</h2>
+        <h2 className="font-semibold text-cyan-700 text-lg">{title}</h2>
         <div className="text-sm text-gray-700 mt-1">{children}</div>
       </div>
     </div>
