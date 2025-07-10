@@ -1,7 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { CalendarDays, MapPin, Sun, Utensils, Info, CloudSun, CloudRain, CloudSnow, Cloud } from "lucide-react";
-import dynamic from "next/dynamic";
+
 import EventsCard from "./EventsCard";
 
 // Wetter-Datentyp
