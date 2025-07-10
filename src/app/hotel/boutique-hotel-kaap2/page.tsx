@@ -76,6 +76,10 @@ export default async function HotelGuidePage() {
             {weather.temperature}°C · Wind: {weather.windspeed} km/h
           </Card>
 
+          <Card icon={<Info className="text-blue-600 w-8 h-8" />} title="Infos zum Hotel" className="sm:col-span-2">
+            Frühstück: 7:30–10:30 Uhr · WLAN: Nordstrand2025 · Spa: täglich 14–20 Uhr
+          </Card>
+
           <EventsCard events={events} />
 
           <Card icon={<Utensils className="text-red-500 w-8 h-8" />} title="Essen & Trinken">
@@ -122,9 +126,7 @@ export default async function HotelGuidePage() {
             </a>
           </Card>
 
-          <Card icon={<Info className="text-blue-600 w-8 h-8" />} title="Infos zum Hotel" className="sm:col-span-2">
-            Frühstück: 7:30–10:30 Uhr · WLAN: Nordstrand2025 · Spa: täglich 14–20 Uhr
-          </Card>
+        
         </div>
 
         <div className="text-center mt-10">
