@@ -1,3 +1,15 @@
+import {
+    CalendarDays,
+    MapPin,
+    Sun,
+    Utensils,
+    Info,
+    CloudSun,
+    CloudRain,
+    CloudSnow,
+    Cloud
+  } from "lucide-react";
+  
 import fs from "fs/promises";
 import path from "path";
 
