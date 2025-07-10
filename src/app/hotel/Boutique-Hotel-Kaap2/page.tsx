@@ -67,7 +67,7 @@ export default async function HotelGuidePage() {
 
         <div className="text-center">
           <h1 className="text-4xl font-extrabold text-blue-800 drop-shadow-sm">
-            Willkommen im Inselhotel Nordstrand
+            Willkommen im Boutique Hotel Kaap2
           </h1>
           <p className="text-lg text-blue-600 mt-3">
             Alles, was Sie für Ihren Aufenthalt auf Borkum brauchen – auf einen Blick.
@@ -133,7 +133,7 @@ export default async function HotelGuidePage() {
         </div>
 
         <div className="text-center text-sm text-gray-400 mt-6">
-          © 2025 Inselhotel Nordstrand · Bereitgestellt von Inselführer.de
+          © 2025 Boutique Hotel Kaap2 · Bereitgestellt von inselerleben.de
         </div>
       </div>
     </div>
