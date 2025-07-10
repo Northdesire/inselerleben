@@ -103,7 +103,7 @@ export default async function HotelGuidePage() {
       </li>
     ))}
   </ul>
-</Card>
+</Card> 
 
 
 
