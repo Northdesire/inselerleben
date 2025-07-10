@@ -58,11 +58,11 @@ export default async function HotelGuidePage() {
     <div className="min-h-screen bg-gradient-to-br from-sky-100 to-white p-6 font-sans">
       <div className="max-w-5xl mx-auto space-y-8">
         <div className="overflow-hidden rounded-3xl shadow-lg">
-          <img
-            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1470&q=80"
-            alt="Hotelansicht mit Strand"
-            className="w-full h-72 object-cover"
-          />
+        <img
+  src="/hotelbild-kaap2.jpg"
+  alt="Hotelansicht Kaap 2"
+  className="w-full h-72 object-cover"
+/>
         </div>
 
         <div className="text-center">
