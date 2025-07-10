@@ -7,7 +7,8 @@ import {
     CloudSun,
     CloudRain,
     CloudSnow,
-    Cloud
+    Cloud,
+    FileText
   } from "lucide-react";
   
 import fs from "fs/promises";
@@ -106,18 +107,18 @@ export default async function HotelGuidePage() {
           <Card icon={<MapPin className="text-purple-600 w-8 h-8" />} title="Geheimtipp">
             Spaziergang zur Düne 7 bei Sonnenuntergang – unvergesslich!
           </Card>
-          
-          <Card icon={<Info className="text-green-600 w-8 h-8" />} title="Gästemappe">
-  <p>Alle Infos zu Ihrem Aufenthalt bequem als PDF:</p>
+
+          <Card icon={<FileText className="text-indigo-600 w-8 h-8" />} title="Gästemappe öffnen">
   <a
     href="/gaestemappe.pdf"
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-block mt-2 text-blue-600 underline"
+    className="underline text-blue-600"
   >
-    Gästemappe jetzt öffnen →
+    PDF anzeigen
   </a>
 </Card>
+
 
 
           <Card icon={<Info className="text-blue-600 w-8 h-8" />} title="Infos zum Hotel" className="sm:col-span-2">
