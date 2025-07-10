@@ -1,16 +1,15 @@
 import {
-    
-    MapPin,
-    Sun,
-    Utensils,
-    Info,
-    CloudSun,
-    CloudRain,
-    CloudSnow,
-    Cloud,
-    FileText
-  } from "lucide-react";
-  
+  MapPin,
+  Sun,
+  Utensils,
+  Info,
+  CloudSun,
+  CloudRain,
+  CloudSnow,
+  Cloud,
+  FileText
+} from "lucide-react";
+
 import fs from "fs/promises";
 import path from "path";
 
@@ -33,16 +32,14 @@ type Event = {
   date: string;
 };
 
-// Wettercode zu Icon-Komponente
 function getWeatherIcon(code: number) {
   if ([0, 1].includes(code)) return <Sun className="text-yellow-400 w-8 h-8" />;
   if ([2, 3].includes(code)) return <CloudSun className="text-yellow-500 w-8 h-8" />;
   if ([45, 48].includes(code)) return <Cloud className="text-gray-400 w-8 h-8" />;
-  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return <CloudRain className="text-blue-400 w-8 h-8" />;
+  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return <CloudRain className="text-sky-400 w-8 h-8" />;
   if ([71, 73, 75, 85, 86].includes(code)) return <CloudSnow className="text-blue-200 w-8 h-8" />;
   return <Cloud className="text-gray-400 w-8 h-8" />;
 }
-
 
 export default async function HotelGuidePage() {
   const weatherRes = await fetch(
@@ -55,21 +52,21 @@ export default async function HotelGuidePage() {
   const events: Event[] = JSON.parse(eventsFile);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 to-white p-6 font-sans">
-      <div className="max-w-5xl mx-auto space-y-8">
-        <div className="overflow-hidden rounded-3xl shadow-lg">
-        <img
-  src="/hotelbild-kaap2.jpg"
-  alt="Hotelansicht Kaap 2"
-  className="w-full h-72 object-cover"
-/>
+    <div className="min-h-screen bg-sky-50 text-gray-800 p-6 font-sans">
+      <div className="max-w-5xl mx-auto space-y-10">
+        <div className="overflow-hidden rounded-3xl shadow-xl border border-sky-100">
+          <img
+            src="/hotelbild-kaap2.jpg"
+            alt="Hotel Kaap2"
+            className="w-full h-72 object-cover"
+          />
         </div>
 
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-blue-800 drop-shadow-sm">
+        <div className="text-center space-y-3">
+          <h1 className="text-4xl sm:text-5xl font-bold text-cyan-800">
             Willkommen im Boutique Hotel Kaap2
           </h1>
-          <p className="text-lg text-blue-600 mt-3">
+          <p className="text-lg text-sky-600">
             Alles, was Sie für Ihren Aufenthalt auf Borkum brauchen – auf einen Blick.
           </p>
         </div>
@@ -95,7 +92,7 @@ export default async function HotelGuidePage() {
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place + " Borkum")}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:underline"
+                    className="hover:underline text-cyan-800"
                   >
                     {place}
                   </a>
@@ -109,17 +106,15 @@ export default async function HotelGuidePage() {
           </Card>
 
           <Card icon={<FileText className="text-indigo-600 w-8 h-8" />} title="Gästemappe öffnen">
-  <a
-    href="/gaestemappe.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="underline text-blue-600"
-  >
-    PDF anzeigen
-  </a>
-</Card>
-
-
+            <a
+              href="/gaestemappe.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-cyan-700 hover:text-cyan-900"
+            >
+              PDF anzeigen
+            </a>
+          </Card>
 
           <Card icon={<Info className="text-blue-600 w-8 h-8" />} title="Infos zum Hotel" className="sm:col-span-2">
             Frühstück: 7:30–10:30 Uhr · WLAN: Nordstrand2025 · Spa: täglich 14–20 Uhr
@@ -127,12 +122,12 @@ export default async function HotelGuidePage() {
         </div>
 
         <div className="text-center mt-10">
-          <button className="bg-blue-700 hover:bg-blue-800 text-white text-lg px-8 py-3 rounded-full shadow">
+          <button className="bg-cyan-700 hover:bg-cyan-800 text-white text-lg px-8 py-3 rounded-full shadow-md transition duration-200">
             Weitere Tipps entdecken
           </button>
         </div>
 
-        <div className="text-center text-sm text-gray-400 mt-6">
+        <div className="text-center text-sm text-gray-400 mt-10">
           © 2025 Boutique Hotel Kaap2 · Bereitgestellt von inselerleben.de
         </div>
       </div>
@@ -152,12 +147,13 @@ function Card({
   className?: string;
 }) {
   return (
-    <div className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}>
+    <div className={`bg-white rounded-2xl shadow-sm border border-sky-100 p-5 flex items-start gap-4 ${className}`}>
       {icon}
       <div>
-        <h2 className="font-semibold text-blue-900">{title}</h2>
-        <div className="text-sm text-gray-600">{children}</div>
+        <h2 className="font-semibold text-cyan-900 text-lg">{title}</h2>
+        <div className="text-sm text-gray-700 mt-1">{children}</div>
       </div>
     </div>
   );
 }
+
