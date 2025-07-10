@@ -1,5 +1,5 @@
 import {
-    CalendarDays,
+    
     MapPin,
     Sun,
     Utensils,
