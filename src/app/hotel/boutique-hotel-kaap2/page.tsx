@@ -79,6 +79,10 @@ export default async function HotelGuidePage() {
           <EventsCard events={events} />
 
           <Card icon={<Utensils className="text-red-500 w-8 h-8" />} title="Essen & Trinken">
+  <p className="mb-2">
+    Unsere heutigen Empfehlungen: Fünf Restaurants mit abwechslungsreicher Küche,
+    frischen Zutaten und liebevoller Atmosphäre – perfekt für jeden Geschmack.
+  </p>
   <ul className="list-disc ml-6 space-y-2">
     {[
       "Knurrhahn Fischschnellrestaurant",
@@ -100,6 +104,7 @@ export default async function HotelGuidePage() {
     ))}
   </ul>
 </Card>
+
 
 
           <Card icon={<MapPin className="text-purple-600 w-8 h-8" />} title="Geheimtipp">
