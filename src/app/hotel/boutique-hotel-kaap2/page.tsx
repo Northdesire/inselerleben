@@ -131,7 +131,7 @@ export default async function HotelGuidePage() {
 
         <div className="text-center mt-10">
           <button className="bg-cyan-700 hover:bg-cyan-800 text-white text-lg px-8 py-3 rounded-full shadow-md transition duration-200">
-            Weitere Tipps entdecken
+            Wir freuen uns auf Ihre Google Bewertung!
           </button>
         </div>
 
