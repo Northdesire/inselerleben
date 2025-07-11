@@ -141,6 +141,23 @@ export default async function HotelGuidePage() {
                 PDF anzeigen
               </a>
             </Card>
+
+            <Card
+  icon={<Sun className="text-amber-500 w-7 h-7 sm:w-8 sm:h-8" />}
+  title="Lust auf einen Folgeurlaub?"
+>
+  <p>
+    <a
+      href="https://deine-domain.de"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="underline text-cyan-700 hover:text-cyan-900 font-medium"
+    >
+      Jetzt mit 10 % Rabatt buchen!
+    </a>
+  </p>
+</Card>
+
           </div>
 
           <div className="text-center mt-10">
