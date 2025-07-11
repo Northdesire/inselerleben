@@ -50,7 +50,7 @@ export default function EventsCard() {
         <ul className="space-y-3">
           {visibleEvents.map((ev, i) => (
             <li key={i}>
-              <strong>{ev.time}</strong> ·{" "}
+              <strong>{ev.time?.slice(0, 5)}</strong>
               <a
                 href={ev.url}
                 target="_blank"
