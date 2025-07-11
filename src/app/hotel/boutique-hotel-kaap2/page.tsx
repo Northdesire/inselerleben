@@ -18,14 +18,6 @@ type WeatherData = {
   weathercode: number;
 };
 
-type Event = {
-  title: string;
-  time: string;
-  location: string;
-  description: string;
-  url: string;
-  date: string;
-};
 
 function getWeatherIcon(code: number) {
   const iconSize = "w-8 h-8";
