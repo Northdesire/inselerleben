@@ -63,13 +63,20 @@ export default async function HotelGuidePage() {
       {/* Main content */}
       <div className="relative z-10 p-6 text-gray-800">
         <div className="max-w-5xl mx-auto space-y-10">
-          <div className="overflow-hidden rounded-3xl shadow-xl border border-sky-100">
-            <img
-              src="/hotelbild-kaap2.jpg"
-              alt="Hotel Kaap2"
-              className="w-full h-72 object-cover"
-            />
-          </div>
+        <div className="flex flex-col items-center space-y-4">
+  <img
+    src="/hotel-logo.png"
+    alt="Hotel Logo"
+    className="h-20 sm:h-24 object-contain"
+  />
+  <div className="overflow-hidden rounded-3xl shadow-xl border border-sky-100">
+    <img
+      src="/hotelbild-kaap2.jpg"
+      alt="Hotel Kaap2"
+      className="w-full h-72 object-cover"
+    />
+  </div>
+</div>
 
           <div className="text-center space-y-3">
             <h1 className="text-4xl sm:text-5xl font-bold text-cyan-800">
