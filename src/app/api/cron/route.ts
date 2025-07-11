@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server'
-import { supabase } from '../../../../lib/supabase'
-import events from '../../../../events-today.json'
+import { NextResponse } from "next/server";
+import { supabase } from "../../../../lib/supabase";
+import events from "../../../../events-today.json";
 
-export async function GET() {
+export async function GET(): Promise<Response> {
   // Sicherheit prüfen (optional)
   if (
     process.env.CRON_SECRET &&
@@ -11,9 +11,12 @@ export async function GET() {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  await supabase.from('events').delete().neq('id', 0);
-  const { error } = await supabase.from('events').insert(events);
+  await supabase.from("events").delete().neq("id", 0);
+  const { error } = await supabase.from("events").insert(events);
 
-  if (error) return new Response("Fehler beim Hochladen", { status: 500 });
+  if (error) {
+    return new Response("Fehler beim Hochladen", { status: 500 });
+  }
+
   return NextResponse.json({ ok: true });
 }
