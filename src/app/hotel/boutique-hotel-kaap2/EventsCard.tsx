@@ -1,7 +1,9 @@
 "use client";
+
 import { CalendarDays } from "lucide-react";
 import { useState } from "react";
 
+// Typdefinition für einzelne Events
 type Event = {
   title: string;
   time: string;
@@ -28,7 +30,12 @@ export default function EventsCard({ events }: { events: Event[] }) {
           {visibleEvents.map((ev, i) => (
             <li key={i}>
               <strong>{ev.time}</strong> ·{" "}
-              <a href={ev.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+              <a
+                href={ev.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
                 {ev.title}
               </a>
               <br />
@@ -52,6 +59,7 @@ export default function EventsCard({ events }: { events: Event[] }) {
   );
 }
 
+// Wiederverwendbare Card-Komponente
 function Card({
   icon,
   title,
@@ -64,8 +72,11 @@ function Card({
   className?: string;
 }) {
   return (
-    <div className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}>
-      {icon}
+    <div
+      className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}
+    >
+      {/* Feste Icon-Größe */}
+      <div className="w-8 h-8 shrink-0">{icon}</div>
       <div>
         <h2 className="font-semibold text-blue-900">{title}</h2>
         <div className="text-sm text-gray-600">{children}</div>
