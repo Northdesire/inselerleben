@@ -7,7 +7,7 @@ import {
   CloudRain,
   CloudSnow,
   Cloud,
-  FileText
+  FileText,
 } from "lucide-react";
 
 import fs from "fs/promises";
@@ -30,12 +30,13 @@ type Event = {
 };
 
 function getWeatherIcon(code: number) {
-  if ([0, 1].includes(code)) return <Sun className="text-yellow-400 w-8 h-8" />;
-  if ([2, 3].includes(code)) return <CloudSun className="text-yellow-500 w-8 h-8" />;
-  if ([45, 48].includes(code)) return <Cloud className="text-gray-400 w-8 h-8" />;
-  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return <CloudRain className="text-sky-400 w-8 h-8" />;
-  if ([71, 73, 75, 85, 86].includes(code)) return <CloudSnow className="text-blue-200 w-8 h-8" />;
-  return <Cloud className="text-gray-400 w-8 h-8" />;
+  const iconSize = "w-10 h-10";
+  if ([0, 1].includes(code)) return <Sun className={`text-yellow-400 ${iconSize}`} />;
+  if ([2, 3].includes(code)) return <CloudSun className={`text-yellow-500 ${iconSize}`} />;
+  if ([45, 48].includes(code)) return <Cloud className={`text-gray-400 ${iconSize}`} />;
+  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return <CloudRain className={`text-sky-400 ${iconSize}`} />;
+  if ([71, 73, 75, 85, 86].includes(code)) return <CloudSnow className={`text-blue-200 ${iconSize}`} />;
+  return <Cloud className={`text-gray-400 ${iconSize}`} />;
 }
 
 export default async function HotelGuidePage() {
@@ -52,10 +53,10 @@ export default async function HotelGuidePage() {
     <div className="relative min-h-screen overflow-hidden font-sans">
       {/* Blurry Background Image */}
       <div
-  className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
-  style={{ backgroundImage: "url('/bg-dunes.jpg')" }}
-  aria-hidden="true"
-/>
+        className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
+        style={{ backgroundImage: "url('/bg-dunes.jpg')" }}
+        aria-hidden="true"
+      />
 
       {/* Semi-transparent overlay */}
       <div className="absolute inset-0 bg-white/20 backdrop-blur-xs" aria-hidden="true" />
@@ -63,20 +64,20 @@ export default async function HotelGuidePage() {
       {/* Main content */}
       <div className="relative z-10 p-6 text-gray-800">
         <div className="max-w-5xl mx-auto space-y-10">
-        <div className="flex flex-col items-center space-y-4">
-  <img
-    src="/hotel-logo.png"
-    alt="Hotel Logo"
-    className="h-20 sm:h-24 object-contain"
-  />
-  <div className="overflow-hidden rounded-3xl shadow-xl border border-sky-100">
-    <img
-      src="/hotelbild-kaap2.jpg"
-      alt="Hotel Kaap2"
-      className="w-full h-72 object-cover"
-    />
-  </div>
-</div>
+          <div className="flex flex-col items-center space-y-4">
+            <img
+              src="/hotel-logo.png"
+              alt="Hotel Logo"
+              className="h-20 sm:h-24 object-contain"
+            />
+            <div className="overflow-hidden rounded-3xl shadow-xl border border-sky-100">
+              <img
+                src="/hotelbild-kaap2.jpg"
+                alt="Hotel Kaap2"
+                className="w-full h-72 object-cover"
+              />
+            </div>
+          </div>
 
           <div className="text-center space-y-3">
             <h1 className="text-4xl sm:text-5xl font-bold text-800">
@@ -92,13 +93,13 @@ export default async function HotelGuidePage() {
               {weather.temperature}°C · Wind: {weather.windspeed} km/h
             </Card>
 
-            <Card icon={<Info className="text-blue-600 w-8 h-8" />} title="Infos zum Hotel" className="sm:col-span-2">
+            <Card icon={<Info className="text-blue-600 w-10 h-10" />} title="Infos zum Hotel" className="sm:col-span-2">
               Frühstück: 7:30–10:30 Uhr · WLAN: Nordstrand2025 · Spa: täglich 14–20 Uhr
             </Card>
 
             <EventsCard events={events} />
 
-            <Card icon={<Utensils className="text-red-500 w-8 h-8" />} title="Essen & Trinken">
+            <Card icon={<Utensils className="text-red-500 w-10 h-10" />} title="Essen & Trinken">
               <p className="mb-2">
                 Unsere heutigen Empfehlungen: Fünf Restaurants mit abwechslungsreicher Küche,
                 frischen Zutaten und liebevoller Atmosphäre – perfekt für jeden Geschmack.
@@ -125,11 +126,11 @@ export default async function HotelGuidePage() {
               </ul>
             </Card>
 
-            <Card icon={<MapPin className="text-purple-600 w-8 h-8" />} title="Geheimtipp">
+            <Card icon={<MapPin className="text-purple-600 w-10 h-10" />} title="Geheimtipp">
               Spaziergang zur Düne 7 bei Sonnenuntergang – unvergesslich!
             </Card>
 
-            <Card icon={<FileText className="text-indigo-600 w-8 h-8" />} title="Gästemappe öffnen">
+            <Card icon={<FileText className="text-indigo-600 w-10 h-10" />} title="Gästemappe öffnen">
               <a
                 href="/gaestemappe.pdf"
                 target="_blank"
@@ -169,7 +170,9 @@ function Card({
 }) {
   return (
     <div className={`bg-white rounded-2xl shadow-sm border border-sky-100 p-5 flex items-start gap-4 ${className}`}>
-      {icon}
+      <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center">
+        {icon}
+      </div>
       <div>
         <h2 className="font-semibold text-cyan-700 text-lg">{title}</h2>
         <div className="text-sm text-gray-700 mt-1">{children}</div>
@@ -177,4 +180,3 @@ function Card({
     </div>
   );
 }
-
