@@ -68,7 +68,7 @@ export default async function HotelGuidePage() {
             <img
               src="/hotel-logo.png"
               alt="Hotel Logo"
-              className="h-20 sm:h-24 object-contain"
+              className="h-17 sm:h-24 object-contain"
             />
             <div className="overflow-hidden rounded-3xl shadow-xl border border-sky-100">
               <img
