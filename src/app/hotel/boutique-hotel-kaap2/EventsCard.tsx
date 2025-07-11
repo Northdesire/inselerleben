@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { useState } from "react";
+import { supabase } from "../../../../lib/supabase"; // Pfad ggf. anpassen!
 
-// Typdefinition für einzelne Events
 type Event = {
   title: string;
   time: string;
@@ -13,8 +13,29 @@ type Event = {
   date: string;
 };
 
-export default function EventsCard({ events }: { events: Event[] }) {
+export default function EventsCard() {
+  const [events, setEvents] = useState<Event[]>([]);
   const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    async function loadEvents() {
+      const today = new Date().toISOString().split("T")[0];
+      const { data, error } = await supabase
+        .from("events_today")
+        .select("*")
+        .eq("date", today)
+        .order("time", { ascending: true });
+
+      if (error) {
+        console.error("Fehler beim Laden der Events:", error);
+      } else {
+        setEvents(data || []);
+      }
+    }
+
+    loadEvents();
+  }, []);
+
   const visibleEvents = showAll ? events : events.slice(0, 2);
 
   return (
@@ -59,7 +80,6 @@ export default function EventsCard({ events }: { events: Event[] }) {
   );
 }
 
-// Wiederverwendbare Card-Komponente
 function Card({
   icon,
   title,
@@ -72,10 +92,7 @@ function Card({
   className?: string;
 }) {
   return (
-    <div
-      className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}
-    >
-      {/* Feste Icon-Größe */}
+    <div className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}>
       <div className="w-8 h-8 shrink-0">{icon}</div>
       <div>
         <h2 className="font-semibold text-blue-900">{title}</h2>

@@ -46,9 +46,6 @@ export default async function HotelGuidePage() {
   const weatherJson = await weatherRes.json();
   const weather: WeatherData = weatherJson.current_weather;
 
-  const eventsFile = await fs.readFile(path.join(process.cwd(), "events-today.json"), "utf-8");
-  const events: Event[] = JSON.parse(eventsFile);
-
   return (
     <div className="relative min-h-screen overflow-hidden font-sans">
       {/* Blurry Background Image */}
@@ -98,7 +95,7 @@ export default async function HotelGuidePage() {
               Frühstück: 7:30–10:30 Uhr · WLAN: Nordstrand2025 · Spa: täglich 14–20 Uhr
             </Card>
 
-            <EventsCard events={events} />
+            <EventsCard />
 
             <Card icon={<Utensils className="text-red-500 w-8 h-8" />} title="Essen & Trinken">
               <p className="mb-2">
