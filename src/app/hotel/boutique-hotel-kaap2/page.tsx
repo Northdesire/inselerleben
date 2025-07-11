@@ -30,7 +30,7 @@ type Event = {
 };
 
 function getWeatherIcon(code: number) {
-  const iconSize = "w-10 h-10";
+  const iconSize = "w-8 h-8";
   if ([0, 1].includes(code)) return <Sun className={`text-yellow-400 ${iconSize}`} />;
   if ([2, 3].includes(code)) return <CloudSun className={`text-yellow-500 ${iconSize}`} />;
   if ([45, 48].includes(code)) return <Cloud className={`text-gray-400 ${iconSize}`} />;
@@ -93,13 +93,13 @@ export default async function HotelGuidePage() {
               {weather.temperature}°C · Wind: {weather.windspeed} km/h
             </Card>
 
-            <Card icon={<Info className="text-blue-600 w-10 h-10" />} title="Infos zum Hotel" className="sm:col-span-2">
+            <Card icon={<Info className="text-blue-600 w-8 h-8" />} title="Infos zum Hotel" className="sm:col-span-2">
               Frühstück: 7:30–10:30 Uhr · WLAN: Nordstrand2025 · Spa: täglich 14–20 Uhr
             </Card>
 
             <EventsCard events={events} />
 
-            <Card icon={<Utensils className="text-red-500 w-10 h-10" />} title="Essen & Trinken">
+            <Card icon={<Utensils className="text-red-500 w-8 h-8" />} title="Essen & Trinken">
               <p className="mb-2">
                 Unsere heutigen Empfehlungen: Fünf Restaurants mit abwechslungsreicher Küche,
                 frischen Zutaten und liebevoller Atmosphäre – perfekt für jeden Geschmack.
@@ -126,11 +126,11 @@ export default async function HotelGuidePage() {
               </ul>
             </Card>
 
-            <Card icon={<MapPin className="text-purple-600 w-10 h-10" />} title="Geheimtipp">
+            <Card icon={<MapPin className="text-purple-600 w-8 h-8" />} title="Geheimtipp">
               Spaziergang zur Düne 7 bei Sonnenuntergang – unvergesslich!
             </Card>
 
-            <Card icon={<FileText className="text-indigo-600 w-10 h-10" />} title="Gästemappe öffnen">
+            <Card icon={<FileText className="text-indigo-600 w-8 h-8" />} title="Gästemappe öffnen">
               <a
                 href="/gaestemappe.pdf"
                 target="_blank"
