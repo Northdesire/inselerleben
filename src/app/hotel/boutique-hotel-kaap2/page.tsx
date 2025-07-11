@@ -70,7 +70,7 @@ export default async function HotelGuidePage() {
               alt="Hotel Logo"
               className="h-17 sm:h-24 object-contain"
             />
-          <div className="overflow-hidden rounded-3xl shadow-xl border-4 border-white">
+          <div className="overflow-hidden rounded-3xl shadow-xl border-2 border-white">
 
               <img
                 src="/hotelbild-kaap2.jpg"
