@@ -3,13 +3,13 @@ import { NextResponse } from "next/server";
 
 // Beispiel: Holt Events aus externer API oder Datei
 type EventData = {
-  id?: string;
-  title: string;
-  date: string;
-  [key: string]: any;
-};
-
-async function fetchTodaysEvents(): Promise<EventData[]> {
+    title: string;
+    date: string;
+    // ergänze ggf. weitere Felder wie "location", "id", etc.
+  };
+  
+  async function fetchTodaysEvents(): Promise<EventData[]> {
+  
   const res = await fetch("https://deine-event-api.de/events-today.json");
   const data = await res.json();
   return data;

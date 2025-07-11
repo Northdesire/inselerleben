@@ -10,8 +10,6 @@ import {
   FileText,
 } from "lucide-react";
 
-import fs from "fs/promises";
-import path from "path";
 import EventsCard from "./EventsCard";
 
 type WeatherData = {
