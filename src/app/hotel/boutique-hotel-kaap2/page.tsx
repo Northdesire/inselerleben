@@ -58,7 +58,7 @@ export default async function HotelGuidePage() {
 />
 
       {/* Semi-transparent overlay */}
-      <div className="absolute inset-0 bg-white/20 backdrop-blur-sm" aria-hidden="true" />
+      <div className="absolute inset-0 bg-white/20 backdrop-blur-xs" aria-hidden="true" />
 
       {/* Main content */}
       <div className="relative z-10 p-6 text-gray-800">

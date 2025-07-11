@@ -18,8 +18,13 @@ const config: Config = {
         sans: ["var(--font-sans)", "Arial", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
       },
+      backdropBlur: {
+        xxs: "0.5px",
+        xs: "1px",
+      },
     },
   },
   plugins: [],
 };
+
 export default config;
