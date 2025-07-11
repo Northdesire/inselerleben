@@ -79,10 +79,10 @@ export default async function HotelGuidePage() {
 </div>
 
           <div className="text-center space-y-3">
-            <h1 className="text-4xl sm:text-5xl font-bold text-cyan-800">
+            <h1 className="text-4xl sm:text-5xl font-bold text-800">
               Willkommen im Boutique Hotel Kaap2
             </h1>
-            <p className="text-lg text-sky-600">
+            <p className="text-lg text-600">
               Alles, was Sie für Ihren Aufenthalt auf Borkum brauchen – auf einen Blick.
             </p>
           </div>
