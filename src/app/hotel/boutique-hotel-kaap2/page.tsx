@@ -143,9 +143,16 @@ export default async function HotelGuidePage() {
           </div>
 
           <div className="text-center mt-10">
-            <button className="bg-cyan-700 hover:bg-cyan-800 text-white text-lg px-8 py-3 rounded-full shadow-md transition duration-200">
-              Wir freuen uns auf Ihre Google Bewertung!
-            </button>
+          <a
+  href="https://g.co/kgs/JVhwCxa"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <button className="bg-cyan-700 hover:bg-cyan-800 text-white text-lg px-8 py-3 rounded-full shadow-md transition duration-200">
+    Wir freuen uns auf Ihre Google Bewertung!
+  </button>
+</a>
+
           </div>
 
           <div className="text-center text-sm text-gray-400 mt-10">
