@@ -40,43 +40,45 @@ export default function EventsCard() {
 
   return (
     <Card
-      icon={<CalendarDays className="text-green-600 w-8 h-8" />}
-      title="Events heute"
-      className="sm:col-span-2"
-    >
-      {visibleEvents.length === 0 ? (
-        <p className="text-gray-500">Keine Veranstaltungen für heute gefunden.</p>
-      ) : (
-        <ul className="space-y-3">
-          {visibleEvents.map((ev, i) => (
-            <li key={i}>
-              <strong>{ev.time?.slice(0, 5)}</strong>
-              <a
-                href={ev.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline"
-              >
-                {ev.title}
-              </a>
-              <br />
-              <span className="text-xs text-gray-500">{ev.location}</span>
-              <br />
-              <span className="text-xs italic text-gray-500">{ev.description}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {events.length > 2 && (
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="mt-3 text-sm text-blue-600 hover:underline"
-        >
-          {showAll ? "Weniger anzeigen ↑" : "Weitere Veranstaltungen anzeigen ↓"}
-        </button>
-      )}
-    </Card>
+    icon={<CalendarDays className="text-green-600 w-8 h-8" />}
+    title="Events heute"
+    className="sm:col-span-2"
+  >
+    {visibleEvents.length === 0 ? (
+      <p className="text-gray-500">Keine Veranstaltungen für heute gefunden.</p>
+    ) : (
+      <ul className="space-y-3">
+        {visibleEvents.map((ev, i) => (
+          <li key={i}>
+            <span className="font-semibold mr-1">{ev.time?.slice(0, 5)}</span>
+            <span className="mr-1">·</span>
+            <a
+              href={ev.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline"
+            >
+              {ev.title}
+            </a>
+            <br />
+            <span className="text-xs text-gray-500">{ev.location}</span>
+            <br />
+            <span className="text-xs italic text-gray-500">{ev.description}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+  
+    {events.length > 2 && (
+      <button
+        onClick={() => setShowAll(!showAll)}
+        className="mt-3 text-sm text-blue-600 hover:underline"
+      >
+        {showAll ? "Weniger anzeigen ↑" : "Weitere Veranstaltungen anzeigen ↓"}
+      </button>
+    )}
+  </Card>
+  
   );
 }
 
