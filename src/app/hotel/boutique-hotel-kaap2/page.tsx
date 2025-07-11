@@ -52,10 +52,11 @@ export default async function HotelGuidePage() {
     <div className="relative min-h-screen overflow-hidden font-sans">
       {/* Blurry Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center blur-sm"
-        style={{ backgroundImage: "url('/bg-dunes.jpg')" }}
-        aria-hidden="true"
-      />
+  className="absolute top-0 left-0 w-full h-full bg-cover bg-center blur-xl"
+  style={{ backgroundImage: "url('/bg-dunes.jpg')" }}
+  aria-hidden="true"
+/>
+
       {/* Semi-transparent overlay */}
       <div className="absolute inset-0 bg-white/80 backdrop-blur-sm" aria-hidden="true" />
 
