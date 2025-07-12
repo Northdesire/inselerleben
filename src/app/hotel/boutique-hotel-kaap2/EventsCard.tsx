@@ -44,17 +44,18 @@ export default function EventsCard() {
   const visibleEvents = showAll ? events : events.slice(0, 2);
 
   function formatTime(raw?: string | null): string {
-    if (!raw || raw.trim() === "") return "ganztägig";
-
+    if (!raw || raw.trim() === "") return "00:00"; // Fallback auf Mitternacht
+  
     const match = raw.match(/^(\d{1,2}):(\d{2})/);
     if (match) {
       const hours = match[1].padStart(2, "0");
       const minutes = match[2];
       return `${hours}:${minutes}`;
     }
-
-    return "ganztägig";
+  
+    return "00:00";
   }
+  
 
   return (
     <Card
