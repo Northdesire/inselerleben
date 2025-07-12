@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { supabase } from "../../../../lib/supabase"; // ggf. Pfad anpassen
+import { supabase } from "../../../../lib/supabase"; // ggf. anpassen
+import localEvents from "../../../../events-today.json"; // Pfad ggf. anpassen
 
 type Event = {
   title: string;
-  time: string;
-  location: string;
-  description: string;
-  url: string;
-  date: string;
+  time?: string | null;
+  location?: string;
+  description?: string;
+  url?: string;
+  date?: string;
 };
 
 export default function EventsCard() {
@@ -28,8 +29,12 @@ export default function EventsCard() {
 
       if (error) {
         console.error("Fehler beim Laden der Events:", error);
+        setEvents(localEvents); // Fallback bei Fehler
+      } else if (!data || data.length === 0) {
+        console.warn("Keine Events in Supabase – Fallback aktiviert.");
+        setEvents(localEvents);
       } else {
-        setEvents(data || []);
+        setEvents(data);
       }
     }
 
@@ -37,6 +42,19 @@ export default function EventsCard() {
   }, []);
 
   const visibleEvents = showAll ? events : events.slice(0, 2);
+
+  function formatTime(raw?: string | null): string {
+    if (!raw || raw.trim() === "") return "ganztägig";
+
+    const match = raw.match(/^(\d{1,2}):(\d{2})/);
+    if (match) {
+      const hours = match[1].padStart(2, "0");
+      const minutes = match[2];
+      return `${hours}:${minutes}`;
+    }
+
+    return "ganztägig";
+  }
 
   return (
     <Card
@@ -53,7 +71,7 @@ export default function EventsCard() {
               <span className="font-semibold mr-1">{formatTime(ev.time)}</span>
               <span className="mr-1">·</span>
               <a
-                href={ev.url}
+                href={ev.url || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"
@@ -81,18 +99,6 @@ export default function EventsCard() {
   );
 }
 
-function formatTime(raw: string | undefined): string {
-  if (!raw) return "ganztägig";
-
-  const trimmed = raw.trim().toLowerCase();
-  if (trimmed.includes("ganztägig")) return "ganztägig";
-
-  const match = trimmed.match(/^(\d{1,2}):(\d{2})/); // z. B. 8:30 oder 08:30
-  if (match) return `${match[1].padStart(2, "0")}:${match[2]}`;
-
-  return "ganztägig";
-}
-
 function Card({
   icon,
   title,
@@ -105,7 +111,9 @@ function Card({
   className?: string;
 }) {
   return (
-    <div className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}>
+    <div
+      className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}
+    >
       <div className="w-8 h-8 shrink-0">{icon}</div>
       <div>
         <h2 className="font-semibold text-blue-900">{title}</h2>
@@ -114,3 +122,4 @@ function Card({
     </div>
   );
 }
+
