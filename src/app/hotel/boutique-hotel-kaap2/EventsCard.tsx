@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
 import { supabase } from "../../../../lib/supabase";
 
-// Wenn du sicher bist, dass dieser Pfad geht:
-import localEvents from "../../../../events-today.json"; // Pfad ggf. anpassen
+// 🔁 Lokale Events als Fallback (funktioniert nur clientseitig bei Build & Dev!)
+import fallbackEvents from "../../../../events-today.json"; // ggf. Pfad anpassen
 
 type Event = {
   title: string;
@@ -23,18 +23,18 @@ export default function EventsCard() {
   useEffect(() => {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("events")
         .select("*")
         .eq("date", today)
         .order("time", { ascending: true });
 
-      if (data && data.length > 0) {
-        setEvents(data);
+      if (error || !data || data.length === 0) {
+        console.warn("⚠️ Supabase leer oder Fehler – nutze Fallback.");
+        const fallback = fallbackEvents.filter(ev => ev.date === today);
+        setEvents(fallback || []);
       } else {
-        console.warn("⚠️ Supabase leer – lade Fallback aus JSON");
-        const fallback = localEvents.filter((ev) => ev.date === today);
-        setEvents(fallback);
+        setEvents(data);
       }
     }
 
@@ -55,7 +55,7 @@ export default function EventsCard() {
         <ul className="space-y-3">
           {visibleEvents.map((ev, i) => (
             <li key={i}>
-              <span className="font-semibold mr-1">{ev.time?.slice(0, 5)}</span>
+              <span className="font-semibold mr-1">{formatTime(ev.time)}</span>
               <span className="mr-1">·</span>
               <a
                 href={ev.url}
@@ -84,6 +84,13 @@ export default function EventsCard() {
       )}
     </Card>
   );
+}
+
+function formatTime(raw: string | undefined): string {
+  if (!raw) return "–";
+  const match = raw.match(/^(\d{2}):(\d{2})/); // "08:30" aus "08:30:00"
+  if (match) return `${match[1]}:${match[2]}`;
+  return "–"; // z. B. bei "12. Juli"
 }
 
 function Card({
