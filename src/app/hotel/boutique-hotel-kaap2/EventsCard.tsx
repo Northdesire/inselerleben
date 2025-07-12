@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { supabase } from "../../../../lib/supabase";
+import { supabase } from "../../../../lib/supabase"; // ggf. Pfad anpassen
 
 type Event = {
   title: string;
@@ -20,23 +20,16 @@ export default function EventsCard() {
   useEffect(() => {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
-
       const { data, error } = await supabase
         .from("events")
         .select("*")
         .eq("date", today)
         .order("time", { ascending: true });
 
-      if (error || !data || data.length === 0) {
-        try {
-          const res = await fetch("/events-today.json");
-          const fallbackEvents: Event[] = await res.json();
-          setEvents(fallbackEvents.filter((e) => e.date === today));
-        } catch (err) {
-          console.error("Fehler beim Laden der Fallback-Daten:", err);
-        }
+      if (error) {
+        console.error("Fehler beim Laden der Events:", error);
       } else {
-        setEvents(data);
+        setEvents(data || []);
       }
     }
 
@@ -92,7 +85,6 @@ function formatTime(raw: string | undefined): string {
   if (!raw) return "ganztägig";
 
   const trimmed = raw.trim().toLowerCase();
-
   if (trimmed.includes("ganztägig")) return "ganztägig";
 
   const match = trimmed.match(/^(\d{1,2}):(\d{2})/); // z. B. 8:30 oder 08:30
@@ -122,3 +114,4 @@ function Card({
     </div>
   );
 }
+
