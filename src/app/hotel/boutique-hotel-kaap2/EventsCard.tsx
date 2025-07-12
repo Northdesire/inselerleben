@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { supabase } from "../../../../lib/supabase"; // Pfad ggf. anpassen!
+import { supabase } from "../../../../lib/supabase";
 
 type Event = {
   title: string;
@@ -21,15 +21,27 @@ export default function EventsCard() {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
       const { data, error } = await supabase
-        .from("events_today")
+        .from("events")
         .select("*")
         .eq("date", today)
         .order("time", { ascending: true });
 
       if (error) {
-        console.error("Fehler beim Laden der Events:", error);
+        console.error("Supabase-Fehler:", error);
+      }
+
+      if (data && data.length > 0) {
+        setEvents(data);
       } else {
-        setEvents(data || []);
+        try {
+          // 👇 Fallback: Lade JSON aus Root-Verzeichnis
+          const res = await fetch("/events_today.json");
+          const fallback = await res.json();
+          const filtered = fallback.filter((ev: Event) => ev.date === today);
+          setEvents(filtered);
+        } catch (err) {
+          console.error("Fallback-JSON konnte nicht geladen werden:", err);
+        }
       }
     }
 
@@ -40,45 +52,44 @@ export default function EventsCard() {
 
   return (
     <Card
-    icon={<CalendarDays className="text-green-600 w-8 h-8" />}
-    title="Events heute"
-    className="sm:col-span-2"
-  >
-    {visibleEvents.length === 0 ? (
-      <p className="text-gray-500">Keine Veranstaltungen für heute gefunden.</p>
-    ) : (
-      <ul className="space-y-3">
-        {visibleEvents.map((ev, i) => (
-          <li key={i}>
-            <span className="font-semibold mr-1">{ev.time?.slice(0, 5)}</span>
-            <span className="mr-1">·</span>
-            <a
-              href={ev.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline"
-            >
-              {ev.title}
-            </a>
-            <br />
-            <span className="text-xs text-gray-500">{ev.location}</span>
-            <br />
-            <span className="text-xs italic text-gray-500">{ev.description}</span>
-          </li>
-        ))}
-      </ul>
-    )}
-  
-    {events.length > 2 && (
-      <button
-        onClick={() => setShowAll(!showAll)}
-        className="mt-3 text-sm text-blue-600 hover:underline"
-      >
-        {showAll ? "Weniger anzeigen ↑" : "Weitere Veranstaltungen anzeigen ↓"}
-      </button>
-    )}
-  </Card>
-  
+      icon={<CalendarDays className="text-green-600 w-8 h-8" />}
+      title="Events heute"
+      className="sm:col-span-2"
+    >
+      {visibleEvents.length === 0 ? (
+        <p className="text-gray-500">Keine Veranstaltungen für heute gefunden.</p>
+      ) : (
+        <ul className="space-y-3">
+          {visibleEvents.map((ev, i) => (
+            <li key={i}>
+              <span className="font-semibold mr-1">{ev.time?.slice(0, 5)}</span>
+              <span className="mr-1">·</span>
+              <a
+                href={ev.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {ev.title}
+              </a>
+              <br />
+              <span className="text-xs text-gray-500">{ev.location}</span>
+              <br />
+              <span className="text-xs italic text-gray-500">{ev.description}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {events.length > 2 && (
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="mt-3 text-sm text-blue-600 hover:underline"
+        >
+          {showAll ? "Weniger anzeigen ↑" : "Weitere Veranstaltungen anzeigen ↓"}
+        </button>
+      )}
+    </Card>
   );
 }
 
@@ -103,3 +114,4 @@ function Card({
     </div>
   );
 }
+
