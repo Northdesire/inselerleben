@@ -15,8 +15,10 @@ export async function GET(): Promise<Response> {
   const { error } = await supabase.from("events").insert(events);
 
   if (error) {
-    return new Response("Fehler beim Hochladen", { status: 500 });
+    console.error("Supabase-Fehler:", error);
+    return new Response(`Fehler beim Hochladen: ${error.message}`, { status: 500 });
   }
+  
 
   return NextResponse.json({ ok: true });
 }
