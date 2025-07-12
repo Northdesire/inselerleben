@@ -21,7 +21,7 @@ export default function EventsCard() {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
       const { data, error } = await supabase
-        .from("events")
+        .from("events_today")
         .select("*")
         .eq("date", today)
         .order("time", { ascending: true });
