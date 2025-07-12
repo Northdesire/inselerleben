@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { supabase } from "../../../../lib/supabase"; // ggf. anpassen
-import localEvents from "../../../../events-today.json"; // Pfad ggf. anpassen
+import { supabase } from "../../../../lib/supabase";
+import fallbackEvents from "../../../../events-today.json"; // falls Datei im Root liegt ggf. anpassen
 
 type Event = {
   title: string;
-  time?: string | null;
-  location?: string;
-  description?: string;
-  url?: string;
-  date?: string;
+  time: string;
+  location: string;
+  description: string;
+  url: string;
+  date: string;
 };
 
 export default function EventsCard() {
@@ -21,6 +21,7 @@ export default function EventsCard() {
   useEffect(() => {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
+
       const { data, error } = await supabase
         .from("events")
         .select("*")
@@ -29,12 +30,14 @@ export default function EventsCard() {
 
       if (error) {
         console.error("Fehler beim Laden der Events:", error);
-        setEvents(localEvents); // Fallback bei Fehler
-      } else if (!data || data.length === 0) {
-        console.warn("Keine Events in Supabase – Fallback aktiviert.");
-        setEvents(localEvents);
+      }
+
+      // Fallback verwenden, wenn Supabase keine Daten liefert
+      if (!data || data.length === 0) {
+        const fallback = fallbackEvents.filter((ev) => ev.date === today);
+        setEvents(fallback || []);
       } else {
-        setEvents(data);
+        setEvents(data || []);
       }
     }
 
@@ -42,20 +45,6 @@ export default function EventsCard() {
   }, []);
 
   const visibleEvents = showAll ? events : events.slice(0, 2);
-
-  function formatTime(raw?: string | null): string {
-    if (!raw || raw.trim() === "") return "00:00"; // Fallback auf Mitternacht
-  
-    const match = raw.match(/^(\d{1,2}):(\d{2})/);
-    if (match) {
-      const hours = match[1].padStart(2, "0");
-      const minutes = match[2];
-      return `${hours}:${minutes}`;
-    }
-  
-    return "00:00";
-  }
-  
 
   return (
     <Card
@@ -69,10 +58,12 @@ export default function EventsCard() {
         <ul className="space-y-3">
           {visibleEvents.map((ev, i) => (
             <li key={i}>
-              <span className="font-semibold mr-1">{formatTime(ev.time)}</span>
+              <span className="font-semibold mr-1">
+                {ev.time?.match(/\d{2}:\d{2}/)?.[0] || "– –"}
+              </span>
               <span className="mr-1">·</span>
               <a
-                href={ev.url || "#"}
+                href={ev.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"
@@ -112,9 +103,7 @@ function Card({
   className?: string;
 }) {
   return (
-    <div
-      className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}
-    >
+    <div className={`bg-white rounded-xl shadow-md p-5 flex items-start gap-4 ${className}`}>
       <div className="w-8 h-8 shrink-0">{icon}</div>
       <div>
         <h2 className="font-semibold text-blue-900">{title}</h2>
@@ -123,4 +112,3 @@ function Card({
     </div>
   );
 }
-
