@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
 import { supabase } from "../../../../lib/supabase";
 
+// Wenn du sicher bist, dass dieser Pfad geht:
+import localEvents from "../../../../events-today.json"; // Pfad ggf. anpassen
+
 type Event = {
   title: string;
   time: string;
@@ -20,26 +23,18 @@ export default function EventsCard() {
   useEffect(() => {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
-
       const { data } = await supabase
-
         .from("events")
         .select("*")
         .eq("date", today)
         .order("time", { ascending: true });
 
-      if (!data || data.length === 0) {
-        console.warn("Keine Daten aus Supabase – Fallback wird geladen");
-        try {
-          const res = await fetch("/api/fallback-events");
-          const fallback: Event[] = await res.json();
-          const todays = fallback.filter((ev) => ev.date === today);
-          setEvents(todays);
-        } catch (e) {
-          console.error("Fehler beim Laden des Fallbacks:", e);
-        }
-      } else {
+      if (data && data.length > 0) {
         setEvents(data);
+      } else {
+        console.warn("⚠️ Supabase leer – lade Fallback aus JSON");
+        const fallback = localEvents.filter((ev) => ev.date === today);
+        setEvents(fallback);
       }
     }
 
