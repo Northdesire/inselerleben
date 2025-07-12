@@ -21,7 +21,8 @@ export default function EventsCard() {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
 
-      const { data, error } = await supabase
+      const { data } = await supabase
+
         .from("events")
         .select("*")
         .eq("date", today)
