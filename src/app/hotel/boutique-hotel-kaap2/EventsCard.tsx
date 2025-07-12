@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
 import { supabase } from "../../../../lib/supabase";
 
-// 🔁 Lokale Events als Fallback (funktioniert nur clientseitig bei Build & Dev!)
-import fallbackEvents from "../../../../events-today.json"; // ggf. Pfad anpassen
-
 type Event = {
   title: string;
   time: string;
@@ -23,6 +20,7 @@ export default function EventsCard() {
   useEffect(() => {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
+
       const { data, error } = await supabase
         .from("events")
         .select("*")
@@ -30,9 +28,13 @@ export default function EventsCard() {
         .order("time", { ascending: true });
 
       if (error || !data || data.length === 0) {
-        console.warn("⚠️ Supabase leer oder Fehler – nutze Fallback.");
-        const fallback = fallbackEvents.filter(ev => ev.date === today);
-        setEvents(fallback || []);
+        try {
+          const res = await fetch("/events-today.json");
+          const fallbackEvents: Event[] = await res.json();
+          setEvents(fallbackEvents.filter((e) => e.date === today));
+        } catch (err) {
+          console.error("Fehler beim Laden der Fallback-Daten:", err);
+        }
       } else {
         setEvents(data);
       }
@@ -87,10 +89,16 @@ export default function EventsCard() {
 }
 
 function formatTime(raw: string | undefined): string {
-  if (!raw) return "–";
-  const match = raw.match(/^(\d{2}):(\d{2})/); // "08:30" aus "08:30:00"
-  if (match) return `${match[1]}:${match[2]}`;
-  return "–"; // z. B. bei "12. Juli"
+  if (!raw) return "ganztägig";
+
+  const trimmed = raw.trim().toLowerCase();
+
+  if (trimmed.includes("ganztägig")) return "ganztägig";
+
+  const match = trimmed.match(/^(\d{1,2}):(\d{2})/); // z. B. 8:30 oder 08:30
+  if (match) return `${match[1].padStart(2, "0")}:${match[2]}`;
+
+  return "ganztägig";
 }
 
 function Card({
