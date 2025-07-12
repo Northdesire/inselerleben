@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { supabase } from "../../../../lib/supabase"; // ggf. Pfad anpassen
+import { supabase } from "../../../../lib/supabase";
+
+// Wenn du sicher bist, dass dieser Pfad geht:
+import localEvents from "../../../../events-today.json"; // Pfad ggf. anpassen
 
 type Event = {
   title: string;
@@ -20,16 +23,18 @@ export default function EventsCard() {
   useEffect(() => {
     async function loadEvents() {
       const today = new Date().toISOString().split("T")[0];
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("events")
         .select("*")
         .eq("date", today)
         .order("time", { ascending: true });
 
-      if (error) {
-        console.error("Fehler beim Laden der Events:", error);
+      if (data && data.length > 0) {
+        setEvents(data);
       } else {
-        setEvents(data || []);
+        console.warn("⚠️ Supabase leer – lade Fallback aus JSON");
+        const fallback = localEvents.filter((ev) => ev.date === today);
+        setEvents(fallback);
       }
     }
 
@@ -50,7 +55,7 @@ export default function EventsCard() {
         <ul className="space-y-3">
           {visibleEvents.map((ev, i) => (
             <li key={i}>
-              <span className="font-semibold mr-1">{formatTime(ev.time)}</span>
+              <span className="font-semibold mr-1">{ev.time?.slice(0, 5)}</span>
               <span className="mr-1">·</span>
               <a
                 href={ev.url}
@@ -81,18 +86,6 @@ export default function EventsCard() {
   );
 }
 
-function formatTime(raw: string | undefined): string {
-  if (!raw) return "ganztägig";
-
-  const trimmed = raw.trim().toLowerCase();
-  if (trimmed.includes("ganztägig")) return "ganztägig";
-
-  const match = trimmed.match(/^(\d{1,2}):(\d{2})/); // z. B. 8:30 oder 08:30
-  if (match) return `${match[1].padStart(2, "0")}:${match[2]}`;
-
-  return "ganztägig";
-}
-
 function Card({
   icon,
   title,
@@ -114,4 +107,3 @@ function Card({
     </div>
   );
 }
-
