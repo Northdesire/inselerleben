@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { supabase } from "../../../../lib/supabase"; // ggf. Pfad anpassen!
+import { supabase } from "../../../../lib/supabase";
 
 type Event = {
   title: string;
@@ -27,21 +27,18 @@ export default function EventsCard() {
         .eq("date", today)
         .order("time", { ascending: true });
 
-      if (error) {
-        console.error("Fehler beim Laden der Events von Supabase:", error);
-      }
-
-      if (data && data.length > 0) {
-        setEvents(data);
-      } else {
+      if (!data || data.length === 0) {
+        console.warn("Keine Daten aus Supabase – Fallback wird geladen");
         try {
-          const res = await fetch("/events_today.json"); // aus dem Root lesen
-          const fallback = await res.json();
-          const filtered = fallback.filter((ev: Event) => ev.date === today);
-          setEvents(filtered);
-        } catch (err) {
-          console.error("Fallback-Events konnten nicht geladen werden:", err);
+          const res = await fetch("/api/fallback-events");
+          const fallback: Event[] = await res.json();
+          const todays = fallback.filter((ev) => ev.date === today);
+          setEvents(todays);
+        } catch (e) {
+          console.error("Fehler beim Laden des Fallbacks:", e);
         }
+      } else {
+        setEvents(data);
       }
     }
 
@@ -114,4 +111,3 @@ function Card({
     </div>
   );
 }
-
